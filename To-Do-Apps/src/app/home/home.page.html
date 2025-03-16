@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      To-Do-Application :) (Ionic-Angular)
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Form Content -->
+<ion-content>
+  <form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="stacked">Activity</ion-label>
+      <ion-input [(ngModel)]="activity" name="activity" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Price</ion-label>
+      <ion-input [(ngModel)]="price" name="price" type="number" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Type</ion-label>
+      <ion-select [(ngModel)]="type" name="type" required>
+        <ion-select-option *ngFor="let type of types" [value]="type">{{ type }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Booking Required</ion-label>
+      <ion-checkbox [(ngModel)]="bookingRequired" name="bookingRequired"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Accessibility</ion-label>
+      <ion-range [(ngModel)]="accessibility" name="accessibility" min="0.0" max="1.0" [value]="0.0" step="0.1" pin="true" ticks="true" snaps="true">
+        <ion-label slot="start">0.0</ion-label>
+        <ion-label slot="end">1.0</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <!-- Submit Button with conditional disabling -->
+    <ion-button expand="full" type="submit" [disabled]="isSubmitDisabled()">Submit</ion-button>
+  </form>
+
+  <!-- If the array is more than 0, show the data -->
+  <div *ngIf="submittedData.length > 0">
+    <h3>Total Activities: {{ submittedData.length }}</h3>
+  </div>
+
+  <div *ngIf="submittedData.length > 0">
+    <h2>Activity Details</h2>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3"><strong>Activity</strong></ion-col>
+        <ion-col size="2"><strong>Price</strong></ion-col>
+        <ion-col size="2"><strong>Type</strong></ion-col>
+        <ion-col size="2"><strong>Booking Required</strong></ion-col>
+        <ion-col size="2"><strong>Accessibility</strong></ion-col>
+        <ion-col size="1"><strong>Actions</strong></ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let data of submittedData; let i = index">
+        <ion-col size="3">{{ data.activity }}</ion-col>
+        <ion-col size="2">{{ data.price | currency }}</ion-col>
+        <ion-col size="2">{{ data.type }}</ion-col>
+        <ion-col size="2">{{ data.bookingRequired ? 'Yes' : 'No' }}</ion-col>
+        <ion-col size="2">{{ data.accessibility }}</ion-col>
+        <ion-col size="1">
+          <ion-button color="danger" (click)="deleteData(i)" size="small">Delete</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
