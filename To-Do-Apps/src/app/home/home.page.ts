@@ -45,7 +45,7 @@ export class HomePage {
 
     console.log('Form submitted with values: ', this.submittedData);
 
-    // Optionally, reset form fields after submission
+    // Reset form fields after submission
     this.activity = '';
     this.price = 0;
     this.type = '';
